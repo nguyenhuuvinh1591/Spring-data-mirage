@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE beans PUBLIC
+	"-//SPRING//DTD BEAN 2.0//EN"
+	"https://www.springframework.org/dtd/spring-beans-2.0.dtd">
+
+<beans>
+
+	<import resource="/spring-data-mirage/dataSource.xml" />
+
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<!-- <tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="false" 
+		/> -->
+	<import resource="/spring-data-mirage/annotationDriven.xml" />
+
+	<bean id="connectionProvider"
+		class="jp.sf.amateras.mirage.integration.spring.SpringConnectionProvider">
+		<property name="transactionManager" ref="transactionManager" />
+	</bean>
+
+	<!-- <bean id="dialect" class="jp.sf.amateras.mirage.dialect.MySQLDialect" 
+		/> -->
+	<bean id="dialect"
+		class="jp.sf.amateras.mirage.dialect.SQLServerDialect" />
+
+	<!-- <bean id="railsLikeNameConverter" class="jp.sf.amateras.mirage.naming.RailsLikeNameConverter" 
+		/> -->
+	<bean id="nameConverter"
+		class="jp.sf.amateras.mirage.naming.DefaultNameConverter" />
+
+	<!-- <bean id="sqlManager" class="jp.sf.amateras.mirage.SqlManagerImpl" 
+		depends-on="fieldPropertyExtractorInitializer"> -->
+	<bean id="sqlManager" class="jp.sf.amateras.mirage.SqlManagerImpl">
+		<property name="connectionProvider" ref="connectionProvider" />
+		<property name="dialect" ref="dialect" />
+		<property name="nameConverter" ref="nameConverter" />
+		<property name="beanDescFactory">
+			<bean class="jp.sf.amateras.mirage.bean.BeanDescFactory">
+				<property name="propertyExtractor">
+					<bean
+						class="jp.sf.amateras.mirage.bean.FieldPropertyExtractor" />
+				</property>
+			</bean>
+		</property>
+	</bean>
+
+	<!-- <mirage:repositories base-package="com.example.product.repository" 
+		sql-manager-ref="sqlManager" /> -->
+	<import resource="/spring-data-mirage/repositories.xml" />
+
+</beans>

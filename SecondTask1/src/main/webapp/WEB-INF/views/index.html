@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document</title>
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+	crossorigin="anonymous">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+</head>
+
+<body>
+	<div class="container">
+		<form method="" >
+			<input type="text" id ="getName" >
+			<button type="button" id="btnSendData" >Send</button>
+		</form>
+		<h1 id="viewStatus"></h1>
+	</div>
+	<script>
+		$("#btnSendData").click(function(){
+			sendData();
+		})				      	
+		function sendData(){		
+			var request = $.ajax({
+				url:'http://localhost:8080/Test_C_Mirage/account',
+				type:'post',
+				data:jQuery.param({username: $("#getName").val()}),
+				contentType:'application/x-www-form-urlencoded; charset=UTF-8'
+			})
+			
+			request.done(function (response) {
+				
+				$("#viewStatus").html(response)
+			});
+			
+			request.fail(function (response) {
+				$("#viewStatus").html("Hổng có tìm thấy")
+			});		
+			
+		}		
+	</script>
+	
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+		integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js"
+		integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"
+		integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+		crossorigin="anonymous"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+	<script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+	
+		<!--  function sendData(){
+			var data = $("#getName").val();
+			console.log(data);
+			
+			url = "http://localhost:8080/Test_C_Mirage/account";
+			params = {username : data};
+			$.post(url, params, 
+					function(reponse){
+						console.log(data + " || " + reponse);
+			}).fail(function(){
+				console.log("fail");
+			});
+		} -->
+</body>
+
+</html>

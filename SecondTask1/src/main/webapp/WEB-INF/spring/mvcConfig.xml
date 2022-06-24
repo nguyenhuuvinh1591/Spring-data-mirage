@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- https://docs.spring.io/spring/docs/3.2.x/spring-framework-reference/html/mvc.html -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+   xmlns:mvc="http://www.springframework.org/schema/mvc"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+   <!-- @EnableWebMvc -->
+   <!-- Although @EnableWebMvc and <mvc:annotation-driven /> have the same 
+      purpose, enabling support for @Controller with @RequestMapping. They aren't 
+      complementary either use Java based config or xml, mixing them will not work. -->
+
+   <!-- The WebMvcConfigurerAdapter or actually the WebMvcConfigurer is only 
+      designed and detected when using @EnableWebMvc not when using <mvc:annotation-driven 
+      /> -->
+
+   <!-- @EnableWebMvc and <mvc:annotation-driven/> are the same thing for activating 
+      @Controller and so on. -->
+   <mvc:annotation-driven />
+
+
+
+   <mvc:default-servlet-handler />
+
+</beans>
